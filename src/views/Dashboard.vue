@@ -5,8 +5,8 @@
       <Loading/>
     </div>
   </div> -->
-  <div class="min-h-dvh w-full bg-blue-100 space-y-2 md:space-y-5 p-2 md:p-5 ">
-    <div class="flex items-center justify-between h-12 rounded shadow-md shadow-blue-200 bg-white p-2 md:p-5">
+  <div class="min-h-dvh w-full bg-blue-100 space-y-5 p-2 lg:p-5 ">
+    <div class="flex items-center justify-between h-12 rounded shadow-md shadow-blue-200 bg-white p-2 lg:p-5">
       <div class="invisible">Export</div>
       <h1 class="text-xl font-bold">
         {{ this.$route.params.appName }}
@@ -32,7 +32,7 @@
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-y-5 md:gap-5">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-5 lg:gap-5">
       <div class="rounded shadow-md shadow-blue-200 bg-white p-5">
         <h1 class="text-center text-xl font-semibold p-2">Current Active</h1>
         <hr class="my-2">
@@ -117,7 +117,7 @@
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-5">
       <div class="col-span-2 space-y-2">
         <div class="flex items-center justify-center text-center text-xl font-semibold rounded shadow-md shadow-blue-200 bg-white p-2">
           <h1 class="me-2">DCI</h1> 
@@ -134,8 +134,11 @@
                 <div>
                   <h3 class="text-xs text-slate-500 text-end">Progress</h3>
                   <h1 class="text-xl font-semibold text-end">
-                    <!-- {{ runbook.totalJobsDone.DCIToBSD.switchOver  }} {{ runbook.totalJobs.DCIToBSD.switchOver }} -->
-                    {{ ((runbook.totalJobsDone.DCIToBSD.switchOver / runbook.totalJobs.DCIToBSD.switchOver) * 100).toFixed(1) }} %
+                    {{ 
+                      runbook.totalJobs.DCIToBSD.switchOver > 0 
+                        ? ((runbook.totalJobsDone.DCIToBSD.switchOver / runbook.totalJobs.DCIToBSD.switchOver) * 100).toFixed(1) + ' %'
+                        : 'N/A'
+                    }}
                   </h1>
                   <h2 class="text-sm text-end">
                     {{ runbook.DCIToBSD.switchOver.status ? runbook.DCIToBSD.switchOver.status : 'N/A' }}
@@ -144,7 +147,13 @@
               </div>
               <hr>
               <div class="flex flex-wrap justify-between">
-                <div>
+                <div v-if="runbook.DCIToBSD.switchOver.start_time && runbook.DCIToBSD.switchOver.end_time">
+                  <h2 class="text-xs text-slate-500">Duration</h2>
+                  <h1 class="text-sm">
+                    {{ formatDuration(runbook.DCIToBSD.switchOver.start_time, runbook.DCIToBSD.switchOver.end_time) }}
+                  </h1>
+                </div>
+                <div v-else>
                   <h2 class="text-xs text-slate-500">Est. Duration</h2>
                   <h1 class="text-sm">
                     {{ runbook.DCIToBSD.switchOver.estimatedDuration ? runbook.DCIToBSD.switchOver.estimatedDuration : 'N/A' }}
@@ -172,7 +181,11 @@
                 <div>
                   <h3 class="text-xs text-slate-500 text-end">Progress</h3>
                   <h1 class="text-xl font-semibold text-end">
-                    {{ ((runbook.totalJobsDone.DCIToBSD.rollback / runbook.totalJobs.DCIToBSD.rollback) * 100).toFixed(1)  }} %
+                    {{ 
+                      runbook.totalJobs.DCIToBSD.rollback > 0 
+                        ? ((runbook.totalJobsDone.DCIToBSD.rollback / runbook.totalJobs.DCIToBSD.rollback) * 100).toFixed(1) + ' %'
+                        : 'N/A'
+                    }}
                   </h1>
                   <h2 class="text-sm text-end">
                     {{ runbook.DCIToBSD.rollback.status ? runbook.DCIToBSD.rollback.status : 'N/A' }}
@@ -181,7 +194,13 @@
               </div>
               <hr>
               <div class="flex flex-wrap justify-between">
-                <div>
+                <div v-if="runbook.DCIToBSD.rollback.start_time && runbook.DCIToBSD.rollback.end_time">
+                  <h2 class="text-xs text-slate-500">Duration</h2>
+                  <h1 class="text-sm">
+                    {{ formatDuration(runbook.DCIToBSD.rollback.start_time, runbook.DCIToBSD.rollback.end_time) }}
+                  </h1>
+                </div>
+                <div v-else>
                   <h2 class="text-xs text-slate-500">Est. Duration</h2>
                   <h1 class="text-sm">
                     {{ runbook.DCIToBSD.rollback.estimatedDuration ? runbook.DCIToBSD.rollback.estimatedDuration : 'N/A' }}
@@ -218,7 +237,11 @@
                 <div>
                   <h3 class="text-xs text-slate-500 text-end">Progress</h3>
                   <h1 class="text-xl font-semibold text-end">
-                    {{ ((runbook.totalJobsDone.BSDToDCI.switchOver / runbook.totalJobs.BSDToDCI.switchOver) * 100).toFixed(1)  }} %
+                    {{ 
+                      runbook.totalJobs.BSDToDCI.switchOver > 0 
+                        ? ((runbook.totalJobsDone.BSDToDCI.switchOver / runbook.totalJobs.BSDToDCI.switchOver) * 100).toFixed(1) + ' %'
+                        : 'N/A'
+                    }}
                   </h1>
                   <h2 class="text-sm text-end">
                     {{ runbook.BSDToDCI.switchOver.status ? runbook.BSDToDCI.switchOver.status : 'N/A' }}
@@ -227,7 +250,13 @@
               </div>
               <hr>
               <div class="flex flex-wrap justify-between">
-                <div>
+                <div v-if="runbook.BSDToDCI.switchOver.start_time && runbook.BSDToDCI.switchOver.end_time">
+                  <h2 class="text-xs text-slate-500">Duration</h2>
+                  <h1 class="text-sm">
+                    {{ formatDuration(runbook.BSDToDCI.switchOver.start_time, runbook.BSDToDCI.switchOver.end_time) }}
+                  </h1>
+                </div>
+                <div v-else>
                   <h2 class="text-xs text-slate-500">Est. Duration</h2>
                   <h1 class="text-sm">
                     {{ runbook.BSDToDCI.switchOver.estimatedDuration ? runbook.BSDToDCI.switchOver.estimatedDuration : 'N/A' }}
@@ -255,7 +284,11 @@
                 <div>
                   <h3 class="text-xs text-slate-500 text-end">Progress</h3>
                   <h1 class="text-xl font-semibold text-end">
-                    {{ ((runbook.totalJobsDone.BSDToDCI.rollback / runbook.totalJobs.BSDToDCI.rollback) * 100).toFixed(1)  }} %
+                    {{ 
+                      runbook.totalJobs.BSDToDCI.rollback > 0 
+                        ? ((runbook.totalJobsDone.BSDToDCI.rollback / runbook.totalJobs.BSDToDCI.rollback) * 100).toFixed(1) + ' %'
+                        : 'N/A'
+                    }}
                   </h1>
                   <h2 class="text-sm text-end">
                     {{ runbook.BSDToDCI.rollback.status ? runbook.BSDToDCI.rollback.status : 'N/A' }}
@@ -264,7 +297,13 @@
               </div>
               <hr>
               <div class="flex flex-wrap justify-between">
-                <div>
+                <div v-if="runbook.BSDToDCI.rollback.start_time && runbook.BSDToDCI.rollback.end_time">
+                  <h2 class="text-xs text-slate-500">Duration</h2>
+                  <h1 class="text-sm">
+                    {{ formatDuration(runbook.BSDToDCI.rollback.start_time, runbook.BSDToDCI.rollback.end_time) }}
+                  </h1>
+                </div>
+                <div v-else>
                   <h2 class="text-xs text-slate-500">Est. Duration</h2>
                   <h1 class="text-sm">
                     {{ runbook.BSDToDCI.rollback.estimatedDuration ? runbook.BSDToDCI.rollback.estimatedDuration : 'N/A' }}
@@ -284,8 +323,8 @@
       
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-5">
-      <div class="h-96 rounded shadow-md shadow-blue-200 bg-white p-2 md:p-5">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="lg:col-span-1 h-96 rounded shadow-md shadow-blue-200 bg-white p-2 md:p-5">
         <h1 class="text-xl font-semibold mb-3">Workflow</h1>
         <div class="h-72 overflow-y-auto space-y-2">
           <div v-for="(item, index) of workflow" :key="index"
@@ -332,13 +371,13 @@
           </div>
         </div>
       </div>
-      <div class="md:col-span-1 h-96 rounded shadow-md shadow-blue-200 bg-white p-2 md:p-5">
+      <div class="lg:col-span-1 h-96 rounded shadow-md shadow-blue-200 bg-white p-2 md:p-5">
         <h1 class="text-xl font-semibold">Status Summary {{ this.$route.params.appName }}</h1>
         <div class="h-80">
           <DoughnutChart ref="summaryStatusChart" :chartDataProps="SummaryStatusChartData" />
         </div>
       </div>
-      <div class="md:col-span-2 h-96 rounded shadow-md shadow-blue-200 bg-white p-2 md:p-5">
+      <div class="col-span-2 lg:col-span-2 h-96 rounded shadow-md shadow-blue-200 bg-white p-2 md:p-5">
         <h1 class="text-xl font-semibold">Jobs Overview {{ this.$route.params.appName }}</h1>
         <div class="h-80">
           <LineChart ref="overviewChart" :chartDataProps="OverviewChartData" /> 
@@ -567,8 +606,11 @@
                           <div>
                             <h3 class="text-xs text-slate-500 text-end">Progress</h3>
                             <h1 class="text-xl font-semibold text-end">
-                              <!-- {{ runbook.totalJobsDone.DCIToBSD.switchOver  }} {{ runbook.totalJobs.DCIToBSD.switchOver }} -->
-                              {{ ((runbook.totalJobsDone.DCIToBSD.switchOver / runbook.totalJobs.DCIToBSD.switchOver) * 100).toFixed(1) }} %
+                              {{ 
+                                runbook.totalJobs.DCIToBSD.switchOver > 0 
+                                  ? ((runbook.totalJobsDone.DCIToBSD.switchOver / runbook.totalJobs.DCIToBSD.switchOver) * 100).toFixed(1) + ' %'
+                                  : 'N/A'
+                              }}
                             </h1>
                             <h2 class="text-sm text-end">
                               {{ runbook.DCIToBSD.switchOver.status ? runbook.DCIToBSD.switchOver.status : 'N/A' }}
@@ -577,7 +619,13 @@
                         </div>
                         <hr>
                         <div class="flex flex-wrap justify-between">
-                          <div>
+                          <div v-if="runbook.DCIToBSD.switchOver.start_time && runbook.DCIToBSD.switchOver.end_time">
+                            <h2 class="text-xs text-slate-500">Duration</h2>
+                            <h1 class="text-sm">
+                              {{ formatDuration(runbook.DCIToBSD.switchOver.start_time, runbook.DCIToBSD.switchOver.end_time) }}
+                            </h1>
+                          </div>
+                          <div v-else>
                             <h2 class="text-xs text-slate-500">Est. Duration</h2>
                             <h1 class="text-sm">
                               {{ runbook.DCIToBSD.switchOver.estimatedDuration ? runbook.DCIToBSD.switchOver.estimatedDuration : 'N/A' }}
@@ -605,7 +653,11 @@
                           <div>
                             <h3 class="text-xs text-slate-500 text-end">Progress</h3>
                             <h1 class="text-xl font-semibold text-end">
-                              {{ ((runbook.totalJobsDone.DCIToBSD.rollback / runbook.totalJobs.DCIToBSD.rollback) * 100).toFixed(1)  }} %
+                              {{ 
+                                runbook.totalJobs.DCIToBSD.rollback > 0 
+                                  ? ((runbook.totalJobsDone.DCIToBSD.rollback / runbook.totalJobs.DCIToBSD.rollback) * 100).toFixed(1) + ' %'
+                                  : 'N/A'
+                              }}
                             </h1>
                             <h2 class="text-sm text-end">
                               {{ runbook.DCIToBSD.rollback.status ? runbook.DCIToBSD.rollback.status : 'N/A' }}
@@ -614,7 +666,13 @@
                         </div>
                         <hr>
                         <div class="flex flex-wrap justify-between">
-                          <div>
+                          <div v-if="runbook.DCIToBSD.rollback.start_time && runbook.DCIToBSD.rollback.end_time">
+                            <h2 class="text-xs text-slate-500">Duration</h2>
+                            <h1 class="text-sm">
+                              {{ formatDuration(runbook.DCIToBSD.rollback.start_time, runbook.DCIToBSD.rollback.end_time) }}
+                            </h1>
+                          </div>
+                          <div v-else>
                             <h2 class="text-xs text-slate-500">Est. Duration</h2>
                             <h1 class="text-sm">
                               {{ runbook.DCIToBSD.rollback.estimatedDuration ? runbook.DCIToBSD.rollback.estimatedDuration : 'N/A' }}
@@ -651,7 +709,11 @@
                           <div>
                             <h3 class="text-xs text-slate-500 text-end">Progress</h3>
                             <h1 class="text-xl font-semibold text-end">
-                              {{ ((runbook.totalJobsDone.BSDToDCI.switchOver / runbook.totalJobs.BSDToDCI.switchOver) * 100).toFixed(1)  }} %
+                              {{ 
+                                runbook.totalJobs.BSDToDCI.switchOver > 0 
+                                  ? ((runbook.totalJobsDone.BSDToDCI.switchOver / runbook.totalJobs.BSDToDCI.switchOver) * 100).toFixed(1) + ' %'
+                                  : 'N/A'
+                              }}
                             </h1>
                             <h2 class="text-sm text-end">
                               {{ runbook.BSDToDCI.switchOver.status ? runbook.BSDToDCI.switchOver.status : 'N/A' }}
@@ -660,7 +722,13 @@
                         </div>
                         <hr>
                         <div class="flex flex-wrap justify-between">
-                          <div>
+                          <div v-if="runbook.BSDToDCI.switchOver.start_time && runbook.BSDToDCI.switchOver.end_time">
+                            <h2 class="text-xs text-slate-500">Duration</h2>
+                            <h1 class="text-sm">
+                              {{ formatDuration(runbook.BSDToDCI.switchOver.start_time, runbook.BSDToDCI.switchOver.end_time) }}
+                            </h1>
+                          </div>
+                          <div v-else>
                             <h2 class="text-xs text-slate-500">Est. Duration</h2>
                             <h1 class="text-sm">
                               {{ runbook.BSDToDCI.switchOver.estimatedDuration ? runbook.BSDToDCI.switchOver.estimatedDuration : 'N/A' }}
@@ -688,7 +756,11 @@
                           <div>
                             <h3 class="text-xs text-slate-500 text-end">Progress</h3>
                             <h1 class="text-xl font-semibold text-end">
-                              {{ ((runbook.totalJobsDone.BSDToDCI.rollback / runbook.totalJobs.BSDToDCI.rollback) * 100).toFixed(1)  }} %
+                              {{ 
+                                runbook.totalJobs.BSDToDCI.rollback > 0 
+                                  ? ((runbook.totalJobsDone.BSDToDCI.rollback / runbook.totalJobs.BSDToDCI.rollback) * 100).toFixed(1) + ' %'
+                                  : 'N/A'
+                              }}
                             </h1>
                             <h2 class="text-sm text-end">
                               {{ runbook.BSDToDCI.rollback.status ? runbook.BSDToDCI.rollback.status : 'N/A' }}
@@ -697,7 +769,13 @@
                         </div>
                         <hr>
                         <div class="flex flex-wrap justify-between">
-                          <div>
+                          <div v-if="runbook.BSDToDCI.rollback.start_time && runbook.BSDToDCI.rollback.end_time">
+                            <h2 class="text-xs text-slate-500">Duration</h2>
+                            <h1 class="text-sm">
+                              {{ formatDuration(runbook.BSDToDCI.rollback.start_time, runbook.BSDToDCI.rollback.end_time) }}
+                            </h1>
+                          </div>
+                          <div v-else>
                             <h2 class="text-xs text-slate-500">Est. Duration</h2>
                             <h1 class="text-sm">
                               {{ runbook.BSDToDCI.rollback.estimatedDuration ? runbook.BSDToDCI.rollback.estimatedDuration : 'N/A' }}
@@ -887,24 +965,28 @@ export default {
           switchOver: {
             status: '',
             estimatedDuration: '',
-            lastExecution: ''
+            lastExecution: '',
+            end_time: ''
           },
           rollback: {
             status: '',
             estimatedDuration: '',
-            lastExecution: ''
+            lastExecution: '',
+            end_time: ''
           }
         },
         BSDToDCI: {
           switchOver: {
             status: '',
             estimatedDuration: '',
-            lastExecution: ''
+            lastExecution: '',
+            end_time: ''
           },
           rollback: {
             status: '',
             estimatedDuration: '',
-            lastExecution: ''
+            lastExecution: '',
+            end_time: ''
           }
         },
         totalJobsDone: {
@@ -1085,47 +1167,46 @@ export default {
           // update dont get the index 0. TODO: why its reorder to asc -> its desc
             // based on code and tracking, its all good
         //DONE - need review
+
         const latestDCIToBSDSwitchOver = response.data.folders.filter(item => 
           item.name === `BDISOA_Switch_Over_${currentApplication}_To_BSD` && item.start_time
         )[0];
-
-        console.log('latestDCIToBSDSwitchOver', latestDCIToBSDSwitchOver)
-
         this.runbook.DCIToBSD.switchOver.status = latestDCIToBSDSwitchOver?.status;
         this.runbook.DCIToBSD.switchOver.estimatedDuration = latestDCIToBSDSwitchOver?.estimated_end_time 
           ? this.formatDuration(latestDCIToBSDSwitchOver?.estimated_end_time, latestDCIToBSDSwitchOver?.estimated_start_time) 
           : 'N/A';
         this.runbook.DCIToBSD.switchOver.lastExecution = latestDCIToBSDSwitchOver?.start_time;
+        this.runbook.DCIToBSD.switchOver.end_time = latestDCIToBSDSwitchOver?.end_time;
         
         const latestDCIToBSDRollback = response.data.folders.filter(item => 
           item.name === `BDISOA_Rollback_${currentApplication}_To_DCI` && item.start_time
         )[0];
-
         this.runbook.DCIToBSD.rollback.status = latestDCIToBSDRollback?.status;
         this.runbook.DCIToBSD.rollback.estimatedDuration = latestDCIToBSDRollback?.estimated_end_time 
           ? this.formatDuration(latestDCIToBSDRollback?.estimated_end_time, latestDCIToBSDRollback?.estimated_start_time) 
           : 'N/A';
         this.runbook.DCIToBSD.rollback.lastExecution = latestDCIToBSDRollback?.start_time;
+        this.runbook.DCIToBSD.rollback.end_time = latestDCIToBSDRollback?.end_time;
         
         const latestBSDToDCISwitchOver = response.data.folders.filter(item => 
           item.name === `BDISOA_Switch_Over_${currentApplication}_To_DCI` && item.start_time
         )[0];
-        
         this.runbook.BSDToDCI.switchOver.status = latestBSDToDCISwitchOver?.status;
         this.runbook.BSDToDCI.switchOver.estimatedDuration = latestBSDToDCISwitchOver?.estimated_end_time 
           ? this.formatDuration(latestBSDToDCISwitchOver?.estimated_end_time, latestBSDToDCISwitchOver?.estimated_start_time) 
           : 'N/A';
         this.runbook.BSDToDCI.switchOver.lastExecution = latestBSDToDCISwitchOver?.start_time;
+        this.runbook.BSDToDCI.switchOver.end_time = latestBSDToDCISwitchOver?.end_time;
         
         const latestBSDToDCIRollback = response.data.folders.filter(item => 
           item.name === `BDISOA_Rollback_${currentApplication}_To_BSD` && item.start_time
         )[0];
-
         this.runbook.BSDToDCI.rollback.status = latestBSDToDCIRollback?.status;
         this.runbook.BSDToDCI.rollback.estimatedDuration = latestBSDToDCIRollback?.estimated_end_time 
           ? this.formatDuration(latestBSDToDCIRollback?.estimated_end_time, latestBSDToDCIRollback?.estimated_start_time) 
           : 'N/A';
         this.runbook.BSDToDCI.rollback.lastExecution = latestBSDToDCIRollback?.start_time;
+        this.runbook.BSDToDCI.rollback.end_time = latestBSDToDCIRollback?.end_time;
 
         //total jobs done
         const totalJobsDoneRunbook = response.data.totalJobsDoneRunbook[currentApplication];
