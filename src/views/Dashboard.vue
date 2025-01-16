@@ -1087,7 +1087,7 @@ export default {
         //DONE - need review
         const latestDCIToBSDSwitchOver = response.data.folders.filter(item => 
           item.name === `BDISOA_Switch_Over_${currentApplication}_To_BSD` && item.start_time
-        );
+        )[0];
 
         console.log('latestDCIToBSDSwitchOver', latestDCIToBSDSwitchOver)
 
