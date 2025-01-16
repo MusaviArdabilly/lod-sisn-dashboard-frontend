@@ -24,7 +24,7 @@
                 <h1 class="font-bold text-center">DCI</h1>
               </div>
               <div :class="{ 'bg-blue-500' : DCI.readiness[app]?.status }" 
-                class="col-span-5 text-white rounded bg-blue-300 p-4">
+                class="col-span-10 text-white rounded bg-blue-300 p-4">
                 <h1 class="text-sm font-semibold text-center">Readiness {{ app }} DCI</h1>
                 <hr class="border-gray-200 my-1">
                 <div class="flex justify-center items-center gap-4 ">
@@ -33,7 +33,7 @@
                     class="text-xs text-center">{{  formatDate(DCI.readiness[app]?.last_execution) }}</h6>
                 </div>
               </div>
-              <div :class="{ 'bg-blue-500' : DCI.preImplement[app]?.status }" 
+              <!-- <div :class="{ 'bg-blue-500' : DCI.preImplement[app]?.status }" 
                 class="col-span-5 text-white rounded bg-blue-300 p-4">
                 <h1 class="text-sm font-semibold text-center">Pre-Implement {{ app }} to DCI</h1>
                 <hr class="border-gray-200 my-1">
@@ -42,13 +42,13 @@
                   <h6 v-if="DCI.preImplement[app]?.last_execution"
                     class="text-xs text-center">{{  formatDate(DCI.preImplement[app]?.last_execution) }}</h6>
                 </div>
-              </div>
+              </div> -->
               <div :class="{ 'bg-blue-500' : BSD.readiness[app]?.status }"
                 class="col-span-2 flex items-center justify-center text-white rounded bg-blue-300 p-4">
                 <h1 class="font-bold text-center">BSD</h1>
               </div>
               <div :class="{ 'bg-blue-500' : BSD.readiness[app]?.status }"
-                class="col-span-5 text-white rounded bg-blue-300 p-4">
+                class="col-span-10 text-white rounded bg-blue-300 p-4">
                 <h1 class="text-sm font-semibold text-center">Readiness {{ app }} BSD</h1>
                 <hr class="border-gray-200 my-1">
                 <div class="flex justify-center items-center gap-4">
@@ -57,7 +57,7 @@
                     class="text-xs text-center">{{  formatDate(BSD.readiness[app]?.last_execution) }}</h6>
                 </div>
               </div>
-              <div :class="{ 'bg-blue-500' : BSD.preImplement[app]?.status }"
+              <!-- <div :class="{ 'bg-blue-500' : BSD.preImplement[app]?.status }"
                 class="col-span-5 text-white rounded bg-blue-300 p-4">
                 <h1 class="text-sm font-semibold text-center">Pre-Implement {{ app }} to BSD</h1>
                 <hr class="border-gray-200 my-1">
@@ -66,7 +66,7 @@
                   <h6 v-if="BSD.preImplement[app]?.last_execution"
                     class="text-xs text-center">{{  formatDate(BSD.preImplement[app]?.last_execution) }}</h6>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
       </RouterLink>

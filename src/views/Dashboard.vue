@@ -47,7 +47,7 @@
         <h1 class="text-center text-xl font-semibold rounded shadow-md shadow-blue-200 bg-white p-2">
           Switchover Readiness
         </h1>
-        <div class="flex h-28 space-x-2">
+        <div class="flex space-x-2">
           <div class="flex-1 h-full font-bold text-white rounded shadow-md shadow-blue-200 bg-white p-2">
             <div class="flex flex-col h-full justify-center">
               <div class="flex items-center justify-between p-2">
@@ -64,7 +64,7 @@
                   </h2>
                 </span>
               </div>
-              <hr class="border-gray-200">
+              <!-- <hr class="border-gray-200">
               <div class="flex items-center justify-between p-2">
                 <span class="flex flex-col">
                   <h1 class="text-xs font-medium text-slate-500">PreImplement {{ this.$route.params.appName }} to BSD:</h1>
@@ -78,7 +78,7 @@
                     {{ preImplement.BSD.lastExecution ? formatDate(preImplement.BSD.lastExecution) : 'N/A' }}
                   </h2>
                 </span>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="flex-1 h-full font-bold text-white rounded shadow-md shadow-blue-200 bg-white p-2">
@@ -97,7 +97,7 @@
                   </h2>
                 </span>
               </div>
-              <hr class="border-gray-200">
+              <!-- <hr class="border-gray-200">
               <div class="flex items-center justify-between p-2">
                 <span class="flex flex-col">
                   <h1 class="text-xs font-medium text-slate-500">PreImplement {{ this.$route.params.appName }} to DCI:</h1>
@@ -111,7 +111,7 @@
                     {{ preImplement.DCI.lastExecution ? formatDate(preImplement.DCI.lastExecution) : 'N/A' }}
                   </h2>
                 </span>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
