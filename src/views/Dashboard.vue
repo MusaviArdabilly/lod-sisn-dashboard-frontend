@@ -16,20 +16,20 @@
           class="text-sm rounded text-white font-semibold bg-blue-500 px-2 py-1 hover:bg-blue-600">
           Export
         </button>
-          <div class="absolute right-0 w-max origin-top-right rounded bg-blue-500 z-10 mt-2 focus:outline-none"
-            :class="{ 'hidden': isDropdownHidden }">
-            <div class="py-1">
-              <button @click="isOpenPreview = true, isDropdownHidden = true, resetFilters(), handleFilterChange()"
-                class="block text-xs text-white bg-blue-500 px-2 py-1 hover:bg-blue-600">
-                Export as PDF
-              </button>
-              <hr>
-              <button @click="exportToSCV()"
-                class="block text-xs text-white bg-blue-500 px-2 py-1 hover:bg-blue-600">
-                Export as CSV
-              </button>
-            </div>
+        <div class="absolute right-0 w-max origin-top-right rounded bg-blue-500 z-10 mt-2 focus:outline-none"
+          :class="{ 'hidden': isDropdownHidden }">
+          <div class="py-1">
+            <button @click="isOpenPreview = true, isDropdownHidden = true, resetFilters(), handleFilterChange()"
+              class="block text-xs text-white bg-blue-500 px-2 py-1 hover:bg-blue-600">
+              Export as PDF
+            </button>
+            <hr>
+            <button @click="exportToSCV()"
+              class="block text-xs text-white bg-blue-500 px-2 py-1 hover:bg-blue-600">
+              Export as CSV
+            </button>
           </div>
+        </div>
       </div>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-y-5 md:gap-5">
@@ -1403,14 +1403,36 @@ export default {
         const BASE_URL = `${this.config.isProtocolBackendSecure ? 'https://' : 'http://'}` + `${this.config.backendBaseUrl}`;
         const currentApplication = this.$route.params.appName;
 
-        const response = await axios.get(`${BASE_URL}/api/jobs-folders/export/${currentApplication}`, {
+        const response = await axios.get(`${BASE_URL}/api/jobs-folders/export/${currentApplication}
+          ?type=${this.filter.type}
+          &runbook=${this.filter.runbook}
+          &status=${this.filter.status}
+          &date=${this.filter.selectedDay}`, {
           responseType: 'blob'  // This tells Axios to expect a binary blob (the Excel file)
         });
 
+        const selectedDay = this.filter.selectedDay
+          ? new Date(this.filter.selectedDay).toLocaleString('en-GB', {
+              day: '2-digit',
+              month: 'long',
+              year: 'numeric',
+            })
+          : new Date().toLocaleString('en-GB', {
+              month: 'long',
+              year: 'numeric',
+            });
+
+        const filename = [
+          this.filter.type,
+          this.filter.runbook.replace(/_/g, ' ') || currentApplication,
+          this.filter.status,
+          selectedDay
+        ].filter(Boolean).join(' - ');
+        
         const url = window.URL.createObjectURL(response.data);  // response.data is the blob
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'data.xlsx';  // Make sure to use the correct extension (.xlsx)
+        a.download = `${filename}.xlsx`;  // Make sure to use the correct extension (.xlsx)
         document.body.appendChild(a);
         a.click();
         a.remove();
