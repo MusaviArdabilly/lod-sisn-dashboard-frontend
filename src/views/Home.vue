@@ -4,7 +4,7 @@
       <h1 class="text-xl font-bold">Dashboard Readiness</h1>
       <!-- <button class="text-sm rounded border px-2 py-1" @click="generateExportData">Generate Report</button> -->
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
       <RouterLink v-if="applications?.length > 0" v-for="app of applications"
         :key="app" :to="`/dashboard/${app}`" target="_blank" rel="noopener noreferrer">
           <div class="flex flex-col w-full rounded shadow-md shadow-blue-200 bg-white cursor-pointer space-y-2 p-2 md:p-5 hover:translate-y-1 transition ease-in-out">
