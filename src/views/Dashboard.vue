@@ -333,7 +333,7 @@
               <h3 class="text-sm font-semibold my-auto">{{ item.name }}</h3>
               <div>
                 <h3 class="text-xs text-slate-500 text-end">SRT</h3>
-                <h3 class="text-sm text-end">{{ item.srt_end_time ? formatDuration(item.srt_end_time, item.srt_start_time) : 'N/A' }}</h3>
+                <h3 class="text-sm text-end">{{ item.srtTotalDuration ? srtTotalDuration : 'N/A' }}</h3>
               </div>
             </div>
             <hr class="my-2">
@@ -774,7 +774,7 @@
                         <h3 class="text-sm font-semibold my-auto">{{ item.name }}</h3>
                         <div>
                           <h3 class="text-xs text-slate-500 text-end">SRT</h3>
-                          <h3 class="text-sm text-end">{{ item.srt_end_time ? formatDuration(item.srt_start_time, item.srt_end_time) : 'N/A' }}</h3>
+                          <h3 class="text-sm text-end">{{ item.srtTotalDuration ? srtTotalDuration : 'N/A' }}</h3>
                         </div>
                       </div>
                       <hr class="my-2">
@@ -1193,50 +1193,87 @@ export default {
         this.runbook.totalJobs.BSDToDCI.rollback = totalJobsRunbook?.BSD.rollback;
         
         // workflow 
-        this.workflow = response.data.folders.filter(item => 
-          item.name.includes(`Switch_Over_${currentApplication}`) && !item.name.includes('/') && item.start_time
-        ).map(item => ({
-          ...item,
-          name: item.name.replace(/_/g, ' ').replace('BDISOA', '')
-        }));
+        const calculateDuration = (start, end) => {
+          const startTime = new Date(start);
+          const endTime = new Date(end);
+          return (endTime - startTime) / 1000; // Duration in seconds
+        };
 
-        const isTimeInRange = (srt_start_time, start_time, end_time) => {
-          const SRTStartTime = new Date(srt_start_time);
-          const startTime = new Date(start_time);
-          
-          if (!end_time) {
-            return SRTStartTime >= startTime
-          }
+        const groupSRTJobs = (jobs) => {
+          return jobs.reduce((groups, job) => {
+            const match = job.name.match(/#SRT\d+/); // Match SRT prefix like #SRT1, #SRT2
+            if (match) {
+              const prefix = match[0];
+              if (!groups[prefix]) groups[prefix] = [];
+              groups[prefix].push(job);
+            }
+            return groups;
+          }, {});
+        };
 
-          const endTime = new Date(end_time);
-          return SRTStartTime >= startTime && SRTStartTime <= endTime;
-        }
+        const getLongestSRTDurations = (srtGroups) => {
+          return Object.entries(srtGroups).map(([prefix, jobs]) => {
+            const longestJob = jobs.reduce((longest, job) => {
+              const duration = calculateDuration(job.start_time, job.end_time);
+              return duration > longest.duration ? { ...job, duration } : longest;
+            }, { duration: 0 });
+            return { prefix, ...longestJob };
+          });
+        };
 
-          //add srt job
-        const countSrt = (folder, start_time, end_time) => {
-          const folderName = `BDISOA${folder.replace(/ /g, '_')}`
-          // const minuteStartTime = start_time.slice(0, 16);
-          const srtJobs = response.data.jobs.filter(item => 
-            item.name.includes('#SRT_') && item.folder === folderName && isTimeInRange(item.start_time, start_time, end_time)
+        this.workflow = response.data.folders
+          .filter((item) =>
+            item.name.includes(`Switch_Over_${currentApplication}`) && !item.name.includes('/') && item.start_time
           )
+          .map((item) => ({
+            ...item,
+            name: item.name.replace(/_/g, ' ').replace('BDISOA', ''),
+          }));
 
-          if (srtJobs.length > 0) {
-            return { 
-              srt_start_time: srtJobs[srtJobs.length - 1].start_time,  // Corrected index for the last item
-              srt_end_time: srtJobs[0].end_time
-            };
-          } else {
-            return { srt_start_time: null, srt_end_time: null };  // Handle no SRT jobs case
-          }
-        } 
+        const isTimeInRange = (srtStartTime, workflowStart, workflowEnd) => {
+          const SRTStart = new Date(srtStartTime);
+          const start = new Date(workflowStart);
+          if (!workflowEnd) return SRTStart >= start;
+          const end = new Date(workflowEnd);
+          return SRTStart >= start && SRTStart <= end;
+        };
 
-        this.workflow = this.workflow.map(item => {
+        const countSrt = (folder, start_time, end_time) => {
+          const folderName = `BDISOA${folder.replace(/ /g, '_')}`;
+          const srtJobs = response.data.jobs.filter(
+            (job) =>
+              job.name.includes('#SRT') &&
+              job.folder === folderName &&
+              isTimeInRange(job.start_time, start_time, end_time)
+          );
+
+          if (srtJobs.length === 0) return { totalDuration: 0 };
+
+          const groupedSRTJobs = groupSRTJobs(srtJobs);
+          const longestDurations = getLongestSRTDurations(groupedSRTJobs);
+
+          const totalDuration = longestDurations.reduce((sum, job) => sum + job.duration, 0);
+
+          return { totalDuration };
+        };
+
+        const formatDuration = (seconds) => {
+          const hours = Math.floor(seconds / 3600);
+          const minutes = Math.floor((seconds % 3600) / 60);
+          const secondsRemaining = seconds % 60;
+
+          return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secondsRemaining.toString().padStart(2, '0')}`;
+        };
+
+        this.workflow = this.workflow.map((item) => {
           const srtResult = countSrt(item.name, item.start_time, item.end_time);
+          const formattedDuration = formatDuration(srtResult.totalDuration);
           return {
             ...item,
-            ...srtResult
-          }
+            srtTotalDuration: formattedDuration,
+          };
         });
+
 
         // logging
         console.log('runbook', this.runbook);
