@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-y-5 lg:gap-5">
-      <div class="rounded shadow-md shadow-blue-200 bg-white p-5">
+      <div class="rounded shadow-md shadow-blue-200 bg-white p-2 md:p-3">
         <h1 class="text-center text-xl font-semibold p-2">Current Active</h1>
         <hr class="my-2">
         <h1 class="text-center text-2xl font-semibold mb-2">
@@ -47,8 +47,8 @@
         <h1 class="text-center text-xl font-semibold rounded shadow-md shadow-blue-200 bg-white p-2">
           Switchover Readiness
         </h1>
-        <div class="flex space-x-2">
-          <div class="flex-1 h-full font-bold text-white rounded shadow-md shadow-blue-200 bg-white p-2">
+        <div class="grid grid-cols-2 gap-2">
+          <div class="font-bold text-white rounded shadow-md shadow-blue-200 bg-white p-2 md:p-5">
             <div class="flex flex-col h-full justify-center">
               <div class="flex items-center justify-between p-2">
                 <span class="flex flex-col">
@@ -81,7 +81,7 @@
               </div> -->
             </div>
           </div>
-          <div class="flex-1 h-full font-bold text-white rounded shadow-md shadow-blue-200 bg-white p-2">
+          <div class="font-bold text-white rounded shadow-md shadow-blue-200 bg-white p-2 md:p-5">
             <div class="flex flex-col h-full justify-center">
               <div class="flex items-center justify-between p-2">
                 <span class="flex flex-col">
@@ -124,8 +124,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="16"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
           <h1 class="ms-2">BSD Runbook</h1>
         </div>
-        <div class="flex space-x-2">
-          <div class="flex-grow space-y-2">
+        <div class="grid grid-cols-2 gap-2">
+          <div class="space-y-2">
             <div @click="this.filter.runbook = this.filter.runbook ? '' : `BDISOA_Switch_Over_${this.$route.params.appName}_To_BSD`"
               :class="{ 'border border-blue-500': this.filter.runbook === `BDISOA_Switch_Over_${this.$route.params.appName}_To_BSD` }"
               class="rounded shadow-md shadow-blue-200 bg-white space-y-3 p-2 md:p-5 cursor-pointer hover:bg-blue-50">
@@ -168,7 +168,7 @@
               </div>
             </div>
           </div>
-          <div class="flex-grow space-y-2">
+          <div class="space-y-2">
             <div @click="() => { 
                 this.filter.runbook = this.filter.runbook ? '' : `BDISOA_Rollback_${this.$route.params.appName}_To_DCI`
                 this.calculateTotalJobsPerDay();
@@ -223,8 +223,8 @@
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="16"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
           <h1 class="ms-2">DCI Runbook</h1> 
         </div>
-        <div class="flex space-x-2">
-          <div class="flex-grow space-y-2">
+        <div class="grid grid-cols-2 gap-2">
+          <div class="space-y-2">
             <div @click="() => { 
                 this.filter.runbook = this.filter.runbook ? '' : `BDISOA_Switch_Over_${this.$route.params.appName}_To_DCI`
                 this.calculateTotalJobsPerDay();
@@ -271,7 +271,7 @@
               </div>
             </div>
           </div>
-          <div class="flex-grow space-y-2">
+          <div class="space-y-2">
             <div @click="() => { 
                 this.filter.runbook = this.filter.runbook ? '' : `BDISOA_Rollback_${this.$route.params.appName}_To_BSD`
                 this.calculateTotalJobsPerDay();
@@ -506,7 +506,7 @@
               </div>
               <div class="grid grid-cols-5 gap-4">
                 <div class="rounded shadow-md shadow-blue-200 bg-white p-2">
-                  <h1 class="text-center text-lg font-semibold p-2">Current Active</h1>
+                  <h1 class="text-center text-base font-semibold p-2">Current Active</h1>
                   <hr class="mb-2">
                   <h1 class="text-center text-sm font-semibold mb-1">
                     {{ currentActive ? currentActive : 'N/A' }}
@@ -516,11 +516,11 @@
                   </h2>
                 </div>
                 <div class="col-span-4 space-y-2">
-                  <h1 class="text-center text-xl font-semibold rounded shadow-md shadow-blue-200 bg-white p-2">
+                  <h1 class="text-center text-base font-semibold rounded shadow-md shadow-blue-200 bg-white p-2">
                     Switchover Readiness
                   </h1>
-                  <div class="flex h-28 space-x-2">
-                    <div class="flex-1 h-full font-bold text-white rounded shadow-md shadow-blue-200 bg-white p-2">
+                  <div class="grid grid-cols-2 gap-2">
+                    <div class="font-bold text-white rounded shadow-md shadow-blue-200 bg-white p-2">
                       <div class="flex flex-col h-full justify-center">
                         <div class="flex items-center justify-between p-2">
                           <span class="flex flex-col">
@@ -536,24 +536,9 @@
                             </h2>
                           </span>
                         </div>
-                        <hr class="border-gray-200">
-                        <div class="flex items-center justify-between p-2">
-                          <span class="flex flex-col">
-                            <h1 class="text-xs font-medium text-slate-500">PreImplement {{ this.$route.params.appName }} to BSD:</h1>
-                            <h2 class="text-sm font-semibold text-black">
-                              {{ preImplement.BSD.status ? preImplement.BSD.status : 'N/A' }}
-                            </h2>
-                          </span>
-                          <span class="flex flex-col">
-                            <h1 class="text-xs font-medium text-slate-500 text-end">Last Execution:</h1>
-                            <h2 class="text-sm font-semibold text-black text-end">
-                              {{ preImplement.BSD.lastExecution ? formatDate(preImplement.BSD.lastExecution) : 'N/A' }}
-                            </h2>
-                          </span>
-                        </div>
                       </div>
                     </div>
-                    <div class="flex-1 h-full font-bold text-white rounded shadow-md shadow-blue-200 bg-white p-2">
+                    <div class="font-bold text-white rounded shadow-md shadow-blue-200 bg-white p-2">
                       <div class="flex flex-col h-full justify-center">
                         <div class="flex items-center justify-between p-2">
                           <span class="flex flex-col">
@@ -569,21 +554,6 @@
                             </h2>
                           </span>
                         </div>
-                        <hr class="border-gray-200">
-                        <div class="flex items-center justify-between p-2">
-                          <span class="flex flex-col">
-                            <h1 class="text-xs font-medium text-slate-500">PreImplement {{ this.$route.params.appName }} to DCI:</h1>
-                            <h2 class="text-sm font-semibold text-black">
-                              {{ preImplement.DCI.status ? preImplement.DCI.status : 'N/A' }}
-                            </h2>
-                          </span>
-                          <span class="flex flex-col">
-                            <h1 class="text-xs font-medium text-slate-500 text-end">Last Execution:</h1>
-                            <h2 class="text-sm font-semibold text-black text-end">
-                              {{ preImplement.DCI.lastExecution ? formatDate(preImplement.DCI.lastExecution) : 'N/A' }}
-                            </h2>
-                          </span>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -596,8 +566,8 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="16"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
                     <h1 class="ms-2">BSD Runbook</h1>
                   </div>
-                  <div class="flex space-x-2">
-                    <div class="flex-grow space-y-2">
+                  <div class="grid grid-cols-2 gap-2">
+                    <div class="space-y-2">
                       <div @click="this.filter.runbook = this.filter.runbook ? '' : `BDISOA_Switch_Over_${this.$route.params.appName}_To_BSD`"
                         :class="{ 'border border-blue-500': this.filter.runbook === `BDISOA_Switch_Over_${this.$route.params.appName}_To_BSD` }"
                         class="rounded shadow-md shadow-blue-200 bg-white space-y-3 p-2 cursor-pointer hover:bg-blue-50">
@@ -640,7 +610,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="flex-grow space-y-2">
+                    <div class="space-y-2">
                       <div @click="() => { 
                           this.filter.runbook = this.filter.runbook ? '' : `BDISOA_Rollback_${this.$route.params.appName}_To_DCI`
                           this.calculateTotalJobsPerDay();
@@ -695,8 +665,8 @@
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="16"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
                     <h1 class="ms-2">DCI Runbook</h1> 
                   </div>
-                  <div class="flex space-x-2">
-                    <div class="flex-grow space-y-2">
+                  <div class="grid grid-cols-2 gap-2">
+                    <div class="space-y-2">
                       <div @click="() => { 
                           this.filter.runbook = this.filter.runbook ? '' : `BDISOA_Switch_Over_${this.$route.params.appName}_To_DCI`
                           this.calculateTotalJobsPerDay();
@@ -743,7 +713,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="flex-grow space-y-2">
+                    <div class="space-y-2">
                       <div @click="() => { 
                           this.filter.runbook = this.filter.runbook ? '' : `BDISOA_Rollback_${this.$route.params.appName}_To_BSD`
                           this.calculateTotalJobsPerDay();
