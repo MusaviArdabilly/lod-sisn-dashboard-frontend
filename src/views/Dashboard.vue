@@ -560,17 +560,17 @@
                 </div>
               </div>
               <div class="grid grid-cols-2 gap-4">
-                <div class="col-span-2 space-y-2">
+                <div class="space-y-2">
                   <div class="flex items-center justify-center text-center text-lg font-semibold rounded shadow-md shadow-blue-200 bg-white p-2">
                     <h1 class="me-2">DCI</h1> 
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="16"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
                     <h1 class="ms-2">BSD Runbook</h1>
                   </div>
-                  <div class="grid grid-cols-2 gap-2">
+                  <div class="grid gap-2">
                     <div class="space-y-2">
                       <div @click="this.filter.runbook = this.filter.runbook ? '' : `BDISOA_Switch_Over_${this.$route.params.appName}_To_BSD`"
                         :class="{ 'border border-blue-500': this.filter.runbook === `BDISOA_Switch_Over_${this.$route.params.appName}_To_BSD` }"
-                        class="rounded shadow-md shadow-blue-200 bg-white space-y-3 p-2 cursor-pointer hover:bg-blue-50">
+                        class="rounded shadow-md shadow-blue-200 bg-white space-y-3 p-2 md:p-5 cursor-pointer hover:bg-blue-50">
                         <div class="flex flex-wrap items-center justify-between">
                           <h2 class="text-base font-semibold">Switchover to BSD</h2>
                           <div>
@@ -617,7 +617,7 @@
                           this.calculateTotalStatuses();
                         }"
                         :class="{ 'border border-blue-500': this.filter.runbook === `BDISOA_Rollback_${this.$route.params.appName}_To_DCI` }"
-                        class="rounded shadow-md shadow-blue-200 bg-white space-y-3 p-2 cursor-pointer hover:bg-blue-50">
+                        class="rounded shadow-md shadow-blue-200 bg-white space-y-3 p-2 md:p-5 cursor-pointer hover:bg-blue-50">
                         <div class="flex flex-wrap items-center justify-between">
                           <h2 class="text-base font-semibold">Fallback to DCI</h2>
                           <div>
@@ -659,13 +659,13 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-span-2 space-y-2">
+                <div class="space-y-2">
                   <div class="flex items-center justify-center text-center text-lg font-semibold rounded shadow-md shadow-blue-200 bg-white p-2">
                     <h1 class="me-2">BSD</h1>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" height="16"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>
                     <h1 class="ms-2">DCI Runbook</h1> 
                   </div>
-                  <div class="grid grid-cols-2 gap-2">
+                  <div class="grid gap-2">
                     <div class="space-y-2">
                       <div @click="() => { 
                           this.filter.runbook = this.filter.runbook ? '' : `BDISOA_Switch_Over_${this.$route.params.appName}_To_DCI`
@@ -673,7 +673,7 @@
                           this.calculateTotalStatuses();
                         }"
                         :class="{ 'border border-blue-500': this.filter.runbook === `BDISOA_Switch_Over_${this.$route.params.appName}_To_DCI` }"
-                        class="rounded shadow-md shadow-blue-200 bg-white space-y-3 p-2 cursor-pointer hover:bg-blue-50">
+                        class="rounded shadow-md shadow-blue-200 bg-white space-y-3 p-2 md:p-5 cursor-pointer hover:bg-blue-50">
                         <div class="flex flex-wrap items-center justify-between">
                           <h2 class="text-base font-semibold">Switchover to DCI</h2>
                           <div>
@@ -720,7 +720,7 @@
                           this.calculateTotalStatuses();
                         }"
                         :class="{ 'border border-blue-500': this.filter.runbook === `BDISOA_Rollback_${this.$route.params.appName}_To_BSD` }"
-                        class="rounded shadow-md shadow-blue-200 bg-white space-y-3 p-2 cursor-pointer hover:bg-blue-50">
+                        class="rounded shadow-md shadow-blue-200 bg-white space-y-3 p-2 md:p-5 cursor-pointer hover:bg-blue-50">
                         <div class="flex flex-wrap items-center justify-between">
                           <h2 class="text-base font-semibold">Fallback to BSD</h2>
                           <div>
@@ -765,7 +765,7 @@
                 
               </div>
               <div class="grid grid-cols-2 gap-2">
-                <div class="h-96 rounded shadow-md shadow-blue-200 bg-white p-2">
+                <div class="h-96 rounded shadow-md shadow-blue-200 bg-white p-2 md:p-5">
                   <h1 class="text-lg font-semibold my-2">Workflow</h1>
                   <div class="h-72 overflow-y-auto space-y-2">
                     <div v-for="(item, index) of workflow" :key="index"
