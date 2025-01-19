@@ -333,7 +333,7 @@
               <h3 class="text-sm font-semibold my-auto">{{ item.name }}</h3>
               <div>
                 <h3 class="text-xs text-slate-500 text-end">SRT</h3>
-                <h3 class="text-sm text-end">{{ item.srtTotalDuration ? srtTotalDuration : 'N/A' }}</h3>
+                <h3 class="text-sm text-end">{{ item.srtTotalDuration ? item.srtTotalDuration : 'N/A' }}</h3>
               </div>
             </div>
             <hr class="my-2">
@@ -774,7 +774,7 @@
                         <h3 class="text-sm font-semibold my-auto">{{ item.name }}</h3>
                         <div>
                           <h3 class="text-xs text-slate-500 text-end">SRT</h3>
-                          <h3 class="text-sm text-end">{{ item.srtTotalDuration ? srtTotalDuration : 'N/A' }}</h3>
+                          <h3 class="text-sm text-end">{{ item.srtTotalDuration ? item.srtTotalDuration : 'N/A' }}</h3>
                         </div>
                       </div>
                       <hr class="my-2">
