@@ -147,16 +147,14 @@
               </div>
               <hr>
               <div class="flex flex-wrap justify-between">
-                <div v-if="runbook.DCIToBSD.switchOver.start_time && runbook.DCIToBSD.switchOver.end_time">
-                  <h2 class="text-xs text-slate-500">Duration</h2>
+                <div>
+                  <h2 class="text-xs text-slate-500">{{ runbook.DCIToBSD.switchOver.end_time ? 'Duration' : 'Est. Duration' }}</h2>
                   <h1 class="text-sm">
-                    {{ formatDuration(runbook.DCIToBSD.switchOver.start_time, runbook.DCIToBSD.switchOver.end_time) }}
-                  </h1>
-                </div>
-                <div v-else>
-                  <h2 class="text-xs text-slate-500">Est. Duration</h2>
-                  <h1 class="text-sm">
-                    {{ runbook.DCIToBSD.switchOver.estimatedDuration ? runbook.DCIToBSD.switchOver.estimatedDuration : 'N/A' }}
+                    {{ 
+                      runbook.DCIToBSD.switchOver.end_time
+                      ? formatDuration(runbook.DCIToBSD.switchOver.lastExecution, runbook.DCIToBSD.switchOver.end_time)
+                      : runbook.DCIToBSD.switchOver.estimatedDuration 
+                    }}
                   </h1>
                 </div>
                 <div>
@@ -194,16 +192,15 @@
               </div>
               <hr>
               <div class="flex flex-wrap justify-between">
-                <div v-if="runbook.DCIToBSD.rollback.start_time && runbook.DCIToBSD.rollback.end_time">
-                  <h2 class="text-xs text-slate-500">Duration</h2>
+                
+                <div>
+                  <h2 class="text-xs text-slate-500">{{ runbook.DCIToBSD.rollback.end_time ? 'Duration' : 'Est. Duration' }}</h2>
                   <h1 class="text-sm">
-                    {{ formatDuration(runbook.DCIToBSD.rollback.start_time, runbook.DCIToBSD.rollback.end_time) }}
-                  </h1>
-                </div>
-                <div v-else>
-                  <h2 class="text-xs text-slate-500">Est. Duration</h2>
-                  <h1 class="text-sm">
-                    {{ runbook.DCIToBSD.rollback.estimatedDuration ? runbook.DCIToBSD.rollback.estimatedDuration : 'N/A' }}
+                    {{ 
+                      runbook.DCIToBSD.rollback.end_time
+                      ? formatDuration(runbook.DCIToBSD.rollback.lastExecution, runbook.DCIToBSD.rollback.end_time)
+                      : runbook.DCIToBSD.rollback.estimatedDuration 
+                    }}
                   </h1>
                 </div>
                 <div>
@@ -250,16 +247,14 @@
               </div>
               <hr>
               <div class="flex flex-wrap justify-between">
-                <div v-if="runbook.BSDToDCI.switchOver.start_time && runbook.BSDToDCI.switchOver.end_time">
-                  <h2 class="text-xs text-slate-500">Duration</h2>
+                <div>
+                  <h2 class="text-xs text-slate-500">{{ runbook.BSDToDCI.switchOver.end_time ? 'Duration' : 'Est. Duration' }}</h2>
                   <h1 class="text-sm">
-                    {{ formatDuration(runbook.BSDToDCI.switchOver.start_time, runbook.BSDToDCI.switchOver.end_time) }}
-                  </h1>
-                </div>
-                <div v-else>
-                  <h2 class="text-xs text-slate-500">Est. Duration</h2>
-                  <h1 class="text-sm">
-                    {{ runbook.BSDToDCI.switchOver.estimatedDuration ? runbook.BSDToDCI.switchOver.estimatedDuration : 'N/A' }}
+                    {{ 
+                      runbook.BSDToDCI.switchOver.end_time
+                      ? formatDuration(runbook.BSDToDCI.switchOver.lastExecution, runbook.BSDToDCI.switchOver.end_time)
+                      : runbook.BSDToDCI.switchOver.estimatedDuration 
+                    }}
                   </h1>
                 </div>
                 <div>
@@ -297,16 +292,14 @@
               </div>
               <hr>
               <div class="flex flex-wrap justify-between">
-                <div v-if="runbook.BSDToDCI.rollback.start_time && runbook.BSDToDCI.rollback.end_time">
-                  <h2 class="text-xs text-slate-500">Duration</h2>
+                <div>
+                  <h2 class="text-xs text-slate-500">{{ runbook.BSDToDCI.rollback.end_time ? 'Duration' : 'Est. Duration' }}</h2>
                   <h1 class="text-sm">
-                    {{ formatDuration(runbook.BSDToDCI.rollback.start_time, runbook.BSDToDCI.rollback.end_time) }}
-                  </h1>
-                </div>
-                <div v-else>
-                  <h2 class="text-xs text-slate-500">Est. Duration</h2>
-                  <h1 class="text-sm">
-                    {{ runbook.BSDToDCI.rollback.estimatedDuration ? runbook.BSDToDCI.rollback.estimatedDuration : 'N/A' }}
+                    {{ 
+                      runbook.BSDToDCI.rollback.end_time
+                      ? formatDuration(runbook.BSDToDCI.rollback.lastExecution, runbook.BSDToDCI.rollback.end_time)
+                      : runbook.BSDToDCI.rollback.estimatedDuration 
+                    }}
                   </h1>
                 </div>
                 <div>
@@ -1114,7 +1107,7 @@ export default {
           item.start_time
         );
 
-        console.log('readinessApp', readinessApp);
+        // console.log('readinessApp', readinessApp);
         this.readiness.DCI.status = readinessApp?.filter(item => item.name.includes('DCI'))[0]?.status || ''
         this.readiness.DCI.lastExecution = readinessApp?.filter(item => item.name.includes('DCI'))[0]?.start_time || ''
         this.readiness.BSD.status = readinessApp?.filter(item => item.name.includes('BSD'))[0]?.status || ''
@@ -1131,12 +1124,6 @@ export default {
         this.preImplement.DCI.lastExecution = preImplementApp?.filter(item => item.name.includes('DCI'))[0]?.start_time || ''
         this.preImplement.BSD.status = preImplementApp?.filter(item => item.name.includes('BSD'))[0]?.status || ''
         this.preImplement.BSD.lastExecution = preImplementApp?.filter(item => item.name.includes('BSD'))[0]?.start_time || ''
-
-        //runbook
-        //TODO: check why not get the latest
-          // update dont get the index 0. TODO: why its reorder to asc -> its desc
-            // based on code and tracking, its all good
-        //DONE - need review
 
         const latestDCIToBSDSwitchOver = response.data.folders.filter(item => 
           item.name === `BDISOA_Switch_Over_${currentApplication}_To_BSD` && item.start_time
@@ -1243,7 +1230,7 @@ export default {
           const srtJobs = response.data.jobs.filter(
             (job) =>
               job.name.includes('#SRT') &&
-              job.folder === folderName &&
+              job.folder.includes(folderName) &&
               isTimeInRange(job.start_time, start_time, end_time)
           );
 
@@ -1274,9 +1261,8 @@ export default {
           };
         });
 
-
         // logging
-        console.log('runbook', this.runbook);
+        // console.log('runbook', this.runbook);
         // console.log('filter', this.filter);
         // console.log('workflow', this.workflow);
         // console.log('DCI -> BSD Runbook SO Job Done:', this.runbook.totalJobsDone.DCIToBSD.switchOver);
@@ -1491,13 +1477,11 @@ export default {
         const BASE_URL = `${this.config.isProtocolBackendSecure ? 'https://' : 'http://'}` + `${this.config.backendBaseUrl}`;
         const currentApplication = this.$route.params.appName;
 
-        const response = await axios.get(`${BASE_URL}/api/jobs-folders/export/${currentApplication}
-          ?type=${this.filter.type}
-          &runbook=${this.filter.runbook}
-          &status=${this.filter.status}
-          &date=${this.filter.selectedDay}`, {
-          responseType: 'blob'  // This tells Axios to expect a binary blob (the Excel file)
-        });
+        const response = await axios.get(
+          `${BASE_URL}/api/jobs-folders/export/${currentApplication}?type=${this.filter.type}&runbook=${this.filter.runbook}&status=${this.filter.status}&date=${this.filter.selectedDay}`
+          , {
+            responseType: 'blob'  // This tells Axios to expect a binary blob (the Excel file)
+          });
 
         const selectedDay = this.filter.selectedDay
           ? new Date(this.filter.selectedDay).toLocaleString('en-GB', {
