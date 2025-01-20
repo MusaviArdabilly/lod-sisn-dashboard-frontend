@@ -55,7 +55,7 @@ export default {
     }
   },
   mounted() {
-    document.title = 'Login Dashboard'
+    document.title = 'Login'
   },
   computed: {
     config() {
