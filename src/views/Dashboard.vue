@@ -582,16 +582,14 @@
                         </div>
                         <hr>
                         <div class="flex flex-wrap justify-between">
-                          <div v-if="runbook.DCIToBSD.switchOver.start_time && runbook.DCIToBSD.switchOver.end_time">
-                            <h2 class="text-xs text-slate-500">Duration</h2>
+                          <div>
+                            <h2 class="text-xs text-slate-500">{{ runbook.DCIToBSD.switchOver.end_time ? 'Duration' : 'Est. Duration' }}</h2>
                             <h1 class="text-sm">
-                              {{ formatDuration(runbook.DCIToBSD.switchOver.start_time, runbook.DCIToBSD.switchOver.end_time) }}
-                            </h1>
-                          </div>
-                          <div v-else>
-                            <h2 class="text-xs text-slate-500">Est. Duration</h2>
-                            <h1 class="text-sm">
-                              {{ runbook.DCIToBSD.switchOver.estimatedDuration ? runbook.DCIToBSD.switchOver.estimatedDuration : 'N/A' }}
+                              {{ 
+                                runbook.DCIToBSD.switchOver.end_time
+                                ? formatDuration(runbook.DCIToBSD.switchOver.lastExecution, runbook.DCIToBSD.switchOver.end_time)
+                                : runbook.DCIToBSD.switchOver.estimatedDuration 
+                              }}
                             </h1>
                           </div>
                           <div>
@@ -629,16 +627,15 @@
                         </div>
                         <hr>
                         <div class="flex flex-wrap justify-between">
-                          <div v-if="runbook.DCIToBSD.rollback.start_time && runbook.DCIToBSD.rollback.end_time">
-                            <h2 class="text-xs text-slate-500">Duration</h2>
+                          
+                          <div>
+                            <h2 class="text-xs text-slate-500">{{ runbook.DCIToBSD.rollback.end_time ? 'Duration' : 'Est. Duration' }}</h2>
                             <h1 class="text-sm">
-                              {{ formatDuration(runbook.DCIToBSD.rollback.start_time, runbook.DCIToBSD.rollback.end_time) }}
-                            </h1>
-                          </div>
-                          <div v-else>
-                            <h2 class="text-xs text-slate-500">Est. Duration</h2>
-                            <h1 class="text-sm">
-                              {{ runbook.DCIToBSD.rollback.estimatedDuration ? runbook.DCIToBSD.rollback.estimatedDuration : 'N/A' }}
+                              {{ 
+                                runbook.DCIToBSD.rollback.end_time
+                                ? formatDuration(runbook.DCIToBSD.rollback.lastExecution, runbook.DCIToBSD.rollback.end_time)
+                                : runbook.DCIToBSD.rollback.estimatedDuration 
+                              }}
                             </h1>
                           </div>
                           <div>
@@ -685,16 +682,14 @@
                         </div>
                         <hr>
                         <div class="flex flex-wrap justify-between">
-                          <div v-if="runbook.BSDToDCI.switchOver.start_time && runbook.BSDToDCI.switchOver.end_time">
-                            <h2 class="text-xs text-slate-500">Duration</h2>
+                          <div>
+                            <h2 class="text-xs text-slate-500">{{ runbook.BSDToDCI.switchOver.end_time ? 'Duration' : 'Est. Duration' }}</h2>
                             <h1 class="text-sm">
-                              {{ formatDuration(runbook.BSDToDCI.switchOver.start_time, runbook.BSDToDCI.switchOver.end_time) }}
-                            </h1>
-                          </div>
-                          <div v-else>
-                            <h2 class="text-xs text-slate-500">Est. Duration</h2>
-                            <h1 class="text-sm">
-                              {{ runbook.BSDToDCI.switchOver.estimatedDuration ? runbook.BSDToDCI.switchOver.estimatedDuration : 'N/A' }}
+                              {{ 
+                                runbook.BSDToDCI.switchOver.end_time
+                                ? formatDuration(runbook.BSDToDCI.switchOver.lastExecution, runbook.BSDToDCI.switchOver.end_time)
+                                : runbook.BSDToDCI.switchOver.estimatedDuration 
+                              }}
                             </h1>
                           </div>
                           <div>
@@ -732,16 +727,14 @@
                         </div>
                         <hr>
                         <div class="flex flex-wrap justify-between">
-                          <div v-if="runbook.BSDToDCI.rollback.start_time && runbook.BSDToDCI.rollback.end_time">
-                            <h2 class="text-xs text-slate-500">Duration</h2>
+                          <div>
+                            <h2 class="text-xs text-slate-500">{{ runbook.BSDToDCI.rollback.end_time ? 'Duration' : 'Est. Duration' }}</h2>
                             <h1 class="text-sm">
-                              {{ formatDuration(runbook.BSDToDCI.rollback.start_time, runbook.BSDToDCI.rollback.end_time) }}
-                            </h1>
-                          </div>
-                          <div v-else>
-                            <h2 class="text-xs text-slate-500">Est. Duration</h2>
-                            <h1 class="text-sm">
-                              {{ runbook.BSDToDCI.rollback.estimatedDuration ? runbook.BSDToDCI.rollback.estimatedDuration : 'N/A' }}
+                              {{ 
+                                runbook.BSDToDCI.rollback.end_time
+                                ? formatDuration(runbook.BSDToDCI.rollback.lastExecution, runbook.BSDToDCI.rollback.end_time)
+                                : runbook.BSDToDCI.rollback.estimatedDuration 
+                              }}
                             </h1>
                           </div>
                           <div>
