@@ -54,6 +54,9 @@ export default {
       errorMessage: ''
     }
   },
+  mounted() {
+    document.title = 'Login Dashboard'
+  },
   computed: {
     config() {
       return useConfigStore().config;

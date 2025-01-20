@@ -175,7 +175,7 @@ export default {
     }
   },
   mounted() {
-    // console.log('pinia', this.config);
+    document.title = 'Setting'
   },
   computed: {
     config() {

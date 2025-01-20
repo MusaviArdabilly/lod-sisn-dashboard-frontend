@@ -1042,6 +1042,7 @@ export default {
     this.fetchJobsandFolders();
   },
   mounted() {
+    document.title = `${this.$route.params.appName} Dashboard`
     this.interval = setInterval(() => {
       this.fetchJobsandFolders();
     }, 5000); // Fetch data every 5 seconds
