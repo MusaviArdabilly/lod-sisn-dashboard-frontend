@@ -152,6 +152,10 @@ export default {
       try {
         const BASE_URL = `${this.config.isProtocolBackendSecure ? 'https://' : 'http://'}` + `${this.config.backendBaseUrl}`;
 
+        const listApp = await axios.get(`${BASE_URL}/api/config`);
+
+        this.application = listApp.data.config.applications;
+
         const response = await axios.get(`${BASE_URL}/api/current-active-and-readiness`);
 
         if (this.applications?.length > 0) {
