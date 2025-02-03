@@ -155,6 +155,7 @@ import { useConfigStore } from '../store/config';
 import axios from 'axios';
 
 import Toast from '@/components/Toast.vue';
+import { isAuthenticated } from '@/utils/auth';
 
 export default {
   components: {
@@ -162,6 +163,7 @@ export default {
   },
   data() {
     return {
+      isAuthenticated: false,
       successToastVisible: false,
       errorToastVisible: false,
       isDropdownHidden: true,
@@ -175,7 +177,14 @@ export default {
     }
   },
   mounted() {
-    document.title = 'Setting'
+    document.title = 'Setting';
+    this.checkAuthentication;
+    this.checkAuthInterval = setInterval(() => {
+      this.checkAuthentication();
+    }, 60000); //1 mins
+  },
+  beforeDestroy() {
+    clearInterval(this.checkAuthInterval);
   },
   computed: {
     config() {
@@ -184,6 +193,12 @@ export default {
     }
   },
   methods: {
+    checkAuthentication() {
+      this.isAuthenticated = isAuthenticated();
+      if (!this.isAuthenticated) {
+        this.$router.push('/login');
+      }
+    },
     toggleDropdown() {
       this.isDropdownHidden = !this.isDropdownHidden;
     },

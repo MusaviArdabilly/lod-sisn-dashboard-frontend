@@ -1180,25 +1180,25 @@ export default {
           return (endTime - startTime) / 1000; // Duration in seconds
         };
 
-        const groupSRTJobs = (jobs) => {
-          return jobs.reduce((groups, job) => {
-            const match = job.name.match(/#SRT\d+/); // Match SRT prefix like #SRT1, #SRT2
+        const groupSRT = (items) => {
+          return items.reduce((groups, item) => {
+            const match = item.name.match(/#SRT\d+/); // Match SRT prefix like #SRT1, #SRT2
             if (match) {
               const prefix = match[0];
               if (!groups[prefix]) groups[prefix] = [];
-              groups[prefix].push(job);
+              groups[prefix].push(item);
             }
             return groups;
           }, {});
         };
 
         const getLongestSRTDurations = (srtGroups) => {
-          return Object.entries(srtGroups).map(([prefix, jobs]) => {
-            const longestJob = jobs.reduce((longest, job) => {
-              const duration = calculateDuration(job.start_time, job.end_time);
-              return duration > longest.duration ? { ...job, duration } : longest;
+          return Object.entries(srtGroups).map(([prefix, items]) => {
+            const longestSRT = items.reduce((longest, item) => {
+              const duration = calculateDuration(item.start_time, item.end_time);
+              return duration > longest.duration ? { ...item, duration } : longest;
             }, { duration: 0 });
-            return { prefix, ...longestJob };
+            return { prefix, ...longestSRT };
           });
         };
 
@@ -1219,23 +1219,32 @@ export default {
           return SRTStart >= start && SRTStart <= end;
         };
 
+        const calculateTotalSRTDuration = (items) => {
+          if (items.length === 0) return 0;
+          const groupedSRT = groupSRT(items);
+          const longestDurations = getLongestSRTDurations(groupedSRT);
+          return longestDurations.reduce((sum, item) => sum + item.duration, 0);
+        };
+
         const countSrt = (folder, start_time, end_time) => {
           const folderName = `BDISOA${folder.replace(/ /g, '_')}`;
-          const srtJobs = response.data.jobs.filter(
-            (job) =>
-              job.name.includes('#SRT') &&
-              job.folder.includes(folderName) &&
-              isTimeInRange(job.start_time, start_time, end_time)
+
+          const srtJobs = response.data.jobs.filter((job) =>
+            job.name.includes('#SRT') &&
+            job.folder.includes(folderName) &&
+            isTimeInRange(job.start_time, start_time, end_time)
           );
 
-          if (srtJobs.length === 0) return { totalDuration: 0 };
+          const srtFolders = response.data.folders.filter((folder) => 
+            folder.name.includes('#SRT') &&
+            folder.folder.includes(folderName) &&
+            isTimeInRange(folder.start_time, start_time, end_time)
+          );
 
-          const groupedSRTJobs = groupSRTJobs(srtJobs);
-          const longestDurations = getLongestSRTDurations(groupedSRTJobs);
+          const totalSRTJobDuration = calculateTotalSRTDuration(srtJobs);
+          const totalSRTFolderDuration = calculateTotalSRTDuration(srtFolders);
 
-          const totalDuration = longestDurations.reduce((sum, job) => sum + job.duration, 0);
-
-          return { totalDuration };
+          return { totalSRTDuration: totalSRTJobDuration + totalSRTFolderDuration };
         };
 
         const formatDuration = (seconds) => {
@@ -1248,7 +1257,7 @@ export default {
 
         this.workflow = this.workflow.map((item) => {
           const srtResult = countSrt(item.name, item.start_time, item.end_time);
-          const formattedDuration = formatDuration(srtResult.totalDuration);
+          const formattedDuration = formatDuration(srtResult.totalSRTDuration);
           return {
             ...item,
             srtTotalDuration: formattedDuration,
