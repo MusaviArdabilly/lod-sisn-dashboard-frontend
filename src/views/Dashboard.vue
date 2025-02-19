@@ -7,7 +7,10 @@
   </div> -->
   <div class="min-h-dvh w-full bg-blue-100 space-y-5 p-2 lg:p-5 ">
     <div class="flex items-center justify-between h-12 rounded shadow-md shadow-blue-200 bg-white p-2 lg:p-5">
-      <div class="invisible">Export</div>
+      <button @click="triggerUpdateBackend" 
+        class="text-sm rounded text-white font-semibold bg-blue-500 px-2 py-1 hover:bg-blue-600">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw" :class="{'animate-spin': isUpdatingBackend}"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>
+      </button>
       <h1 class="text-xl font-bold">
         {{ this.$route.params.appName }}
       </h1>
@@ -37,10 +40,10 @@
         <h1 class="text-center text-xl font-semibold p-2">Current Active</h1>
         <hr class="my-2">
         <h1 class="text-center text-2xl font-semibold mb-2">
-          {{ currentActive ? currentActive : 'N/A' }}
+          {{ currentActive ? currentActive : '-' }}
         </h1>
         <h2 class="text-center text-xs text-slate-500">
-          {{ currentActive === 'DCI' ? 'Data Center' : (currentActive === 'BSD' ? 'Disaster Recovery Center' : 'N/A') }}
+          {{ currentActive === 'DCI' ? 'Data Center' : (currentActive === 'BSD' ? 'Disaster Recovery Center' : '-') }}
         </h2>
       </div>
       <div class="col-span-3 space-y-2">
@@ -54,13 +57,13 @@
                 <span class="flex flex-col">
                   <h1 class="text-xs font-medium text-slate-500">Readiness {{ this.$route.params.appName }} BSD:</h1>
                   <h2 class="text-sm font-semibold text-black">
-                    {{ readiness.BSD.status ? readiness.BSD.status : 'N/A' }}
+                    {{ readiness.BSD.status ? readiness.BSD.status : '-' }}
                   </h2>
                 </span>
                 <span class="flex flex-col">
                   <h1 class="text-xs font-medium text-slate-500 text-end">Last Execution:</h1>
                   <h2 class="text-sm font-semibold text-black text-end">
-                    {{ readiness.BSD.lastExecution ? formatDate(readiness.BSD.lastExecution) : 'N/A' }}
+                    {{ readiness.BSD.lastExecution ? formatDate(readiness.BSD.lastExecution) : '-' }}
                   </h2>
                 </span>
               </div>
@@ -69,13 +72,13 @@
                 <span class="flex flex-col">
                   <h1 class="text-xs font-medium text-slate-500">PreImplement {{ this.$route.params.appName }} to BSD:</h1>
                   <h2 class="text-sm font-semibold text-black">
-                    {{ preImplement.BSD.status ? preImplement.BSD.status : 'N/A' }}
+                    {{ preImplement.BSD.status ? preImplement.BSD.status : '-' }}
                   </h2>
                 </span>
                 <span class="flex flex-col">
                   <h1 class="text-xs font-medium text-slate-500 text-end">Last Execution:</h1>
                   <h2 class="text-sm font-semibold text-black text-end">
-                    {{ preImplement.BSD.lastExecution ? formatDate(preImplement.BSD.lastExecution) : 'N/A' }}
+                    {{ preImplement.BSD.lastExecution ? formatDate(preImplement.BSD.lastExecution) : '-' }}
                   </h2>
                 </span>
               </div> -->
@@ -87,13 +90,13 @@
                 <span class="flex flex-col">
                   <h1 class="text-xs font-medium text-slate-500">Readiness {{ this.$route.params.appName }} DCI:</h1>
                   <h2 class="text-sm font-semibold text-black">
-                    {{ readiness.DCI.status ? readiness.DCI.status : 'N/A' }}
+                    {{ readiness.DCI.status ? readiness.DCI.status : '-' }}
                   </h2>
                 </span>
                 <span class="flex flex-col">
                   <h1 class="text-xs font-medium text-slate-500 text-end">Last Execution:</h1>
                   <h2 class="text-sm font-semibold text-black text-end">
-                    {{ readiness.DCI.lastExecution ? formatDate(readiness.DCI.lastExecution) : 'N/A' }}
+                    {{ readiness.DCI.lastExecution ? formatDate(readiness.DCI.lastExecution) : '-' }}
                   </h2>
                 </span>
               </div>
@@ -102,13 +105,13 @@
                 <span class="flex flex-col">
                   <h1 class="text-xs font-medium text-slate-500">PreImplement {{ this.$route.params.appName }} to DCI:</h1>
                   <h2 class="text-sm font-semibold text-black">
-                    {{ preImplement.DCI.status ? preImplement.DCI.status : 'N/A' }}
+                    {{ preImplement.DCI.status ? preImplement.DCI.status : '-' }}
                   </h2>
                 </span>
                 <span class="flex flex-col">
                   <h1 class="text-xs font-medium text-slate-500 text-end">Last Execution:</h1>
                   <h2 class="text-sm font-semibold text-black text-end">
-                    {{ preImplement.DCI.lastExecution ? formatDate(preImplement.DCI.lastExecution) : 'N/A' }}
+                    {{ preImplement.DCI.lastExecution ? formatDate(preImplement.DCI.lastExecution) : '-' }}
                   </h2>
                 </span>
               </div> -->
@@ -137,11 +140,11 @@
                     {{ 
                       runbook.totalJobs.DCIToBSD.switchOver > 0 
                         ? ((runbook.totalJobsDone.DCIToBSD.switchOver / runbook.totalJobs.DCIToBSD.switchOver) * 100).toFixed(1) + ' %'
-                        : 'N/A'
+                        : '-'
                     }}
                   </h1>
                   <h2 class="text-sm text-end">
-                    {{ runbook.DCIToBSD.switchOver.status ? runbook.DCIToBSD.switchOver.status : 'N/A' }}
+                    {{ runbook.DCIToBSD.switchOver.status ? runbook.DCIToBSD.switchOver.status : '-' }}
                   </h2>
                 </div>
               </div>
@@ -160,7 +163,7 @@
                 <div>
                   <h2 class="text-xs text-slate-500 text-end">Last Execution</h2>
                   <h1 class="text-sm text-end">
-                    {{ runbook.DCIToBSD.switchOver.lastExecution ? formatDate(runbook.DCIToBSD.switchOver.lastExecution) : 'N/A' }}
+                    {{ runbook.DCIToBSD.switchOver.lastExecution ? formatDate(runbook.DCIToBSD.switchOver.lastExecution) : '-' }}
                   </h1>
                 </div>
               </div>
@@ -182,11 +185,11 @@
                     {{ 
                       runbook.totalJobs.DCIToBSD.rollback > 0 
                         ? ((runbook.totalJobsDone.DCIToBSD.rollback / runbook.totalJobs.DCIToBSD.rollback) * 100).toFixed(1) + ' %'
-                        : 'N/A'
+                        : '-'
                     }}
                   </h1>
                   <h2 class="text-sm text-end">
-                    {{ runbook.DCIToBSD.rollback.status ? runbook.DCIToBSD.rollback.status : 'N/A' }}
+                    {{ runbook.DCIToBSD.rollback.status ? runbook.DCIToBSD.rollback.status : '-' }}
                   </h2>
                 </div>
               </div>
@@ -206,7 +209,7 @@
                 <div>
                   <h2 class="text-xs text-slate-500 text-end">Last Execution</h2>
                   <h1 class="text-sm text-end">
-                    {{ runbook.DCIToBSD.rollback.lastExecution ? formatDate(runbook.DCIToBSD.rollback.lastExecution) : 'N/A' }}
+                    {{ runbook.DCIToBSD.rollback.lastExecution ? formatDate(runbook.DCIToBSD.rollback.lastExecution) : '-' }}
                   </h1>
                 </div>
               </div>
@@ -237,11 +240,11 @@
                     {{ 
                       runbook.totalJobs.BSDToDCI.switchOver > 0 
                         ? ((runbook.totalJobsDone.BSDToDCI.switchOver / runbook.totalJobs.BSDToDCI.switchOver) * 100).toFixed(1) + ' %'
-                        : 'N/A'
+                        : '-'
                     }}
                   </h1>
                   <h2 class="text-sm text-end">
-                    {{ runbook.BSDToDCI.switchOver.status ? runbook.BSDToDCI.switchOver.status : 'N/A' }}
+                    {{ runbook.BSDToDCI.switchOver.status ? runbook.BSDToDCI.switchOver.status : '-' }}
                   </h2>
                 </div>
               </div>
@@ -260,7 +263,7 @@
                 <div>
                   <h2 class="text-xs text-slate-500 text-end">Last Execution</h2>
                   <h1 class="text-sm text-end">
-                    {{ runbook.BSDToDCI.switchOver.lastExecution ? formatDate(runbook.BSDToDCI.switchOver.lastExecution) : 'N/A' }}
+                    {{ runbook.BSDToDCI.switchOver.lastExecution ? formatDate(runbook.BSDToDCI.switchOver.lastExecution) : '-' }}
                   </h1>
                 </div>
               </div>
@@ -282,11 +285,11 @@
                     {{ 
                       runbook.totalJobs.BSDToDCI.rollback > 0 
                         ? ((runbook.totalJobsDone.BSDToDCI.rollback / runbook.totalJobs.BSDToDCI.rollback) * 100).toFixed(1) + ' %'
-                        : 'N/A'
+                        : '-'
                     }}
                   </h1>
                   <h2 class="text-sm text-end">
-                    {{ runbook.BSDToDCI.rollback.status ? runbook.BSDToDCI.rollback.status : 'N/A' }}
+                    {{ runbook.BSDToDCI.rollback.status ? runbook.BSDToDCI.rollback.status : '-' }}
                   </h2>
                 </div>
               </div>
@@ -305,7 +308,7 @@
                 <div>
                   <h2 class="text-xs text-slate-500 text-end">Last Execution</h2>
                   <h1 class="text-sm text-end">
-                    {{ runbook.BSDToDCI.rollback.lastExecution ? formatDate(runbook.BSDToDCI.rollback.lastExecution) : 'N/A' }}
+                    {{ runbook.BSDToDCI.rollback.lastExecution ? formatDate(runbook.BSDToDCI.rollback.lastExecution) : '-' }}
                   </h1>
                 </div>
               </div>
@@ -326,39 +329,39 @@
               <h3 class="text-sm font-semibold my-auto">{{ item.name }}</h3>
               <div>
                 <h3 class="text-xs text-slate-500 text-end">SRT</h3>
-                <h3 class="text-sm text-end">{{ item.srtTotalDuration ? item.srtTotalDuration : 'N/A' }}</h3>
+                <h3 class="text-sm text-end">{{ item.srtTotalDuration ? item.srtTotalDuration : '-' }}</h3>
               </div>
             </div>
             <hr class="my-2">
             <div class="flex justify-between">
               <div>
                 <h2 class="text-xs text-slate-500">Start Time</h2>
-                <h3 class="text-sm">{{ item.start_time ? formatDate(item.start_time) : 'N/A' }}</h3>
+                <h3 class="text-sm">{{ item.start_time ? formatDate(item.start_time) : '-' }}</h3>
               </div>
               <div>
                 <h2 class="text-xs text-slate-500 text-end">End Time</h2>
-                <h3 class="text-sm text-end">{{ item.end_time ? formatDate(item.end_time) : 'N/A' }}</h3>
+                <h3 class="text-sm text-end">{{ item.end_time ? formatDate(item.end_time) : '-' }}</h3>
               </div>
             </div>
           </div>
           <div v-if="workflow.length === 0"
             class="rounded border p-2 md:p-5">
             <div class="flex justify-between">
-              <h3 class="text-sm font-semibold my-auto">N/A</h3>
+              <h3 class="text-sm font-semibold my-auto">-</h3>
               <div>
                 <h3 class="text-xs text-slate-500 text-end">SRT</h3>
-                <h3 class="text-sm text-end">N/A</h3>
+                <h3 class="text-sm text-end">-</h3>
               </div>
             </div>
             <hr class="my-2">
             <div class="flex justify-between">
               <div>
                 <h2 class="text-xs text-slate-500">Start Time</h2>
-                <h3 class="text-sm">N/A</h3>
+                <h3 class="text-sm">-</h3>
               </div>
               <div>
                 <h2 class="text-xs text-slate-500 text-end">End Time</h2>
-                <h3 class="text-sm text-end">N/A</h3>
+                <h3 class="text-sm text-end">-</h3>
               </div>
             </div>
           </div>
@@ -445,13 +448,13 @@
               <td>{{ (currentPage - 1) * itemsPerPage + index + 1 }}</td>
               <td>{{ job.name }}</td>
               <td>{{ job.type }}</td>
-              <td>{{ job.application ? job.application : 'N/A' }}</td>
-              <td>{{ job.sub_application ? job.sub_application : 'N/A' }}</td>
+              <td>{{ job.application ? job.application : '-' }}</td>
+              <td>{{ job.sub_application ? job.sub_application : '-' }}</td>
               <td>{{ formatDate(job.order_date).split(' ')[1] }}</td>
-              <td>{{ job.start_time ? formatDate(job.start_time) : 'N/A' }}</td>
-              <td>{{ job.end_time ? formatDate(job.end_time) : 'N/A' }}</td>
-              <td>{{ job.start_time ? (job.end_time ? formatDuration(job.start_time, job.end_time) : 'N/A') : 'N/A' }}</td>
-              <!-- <td>{{ job.held ? 'Held' : (job.deleted ? 'Deleted' : (job.cyclic ? 'Cyclic' : 'N/A')) }}</td> -->
+              <td>{{ job.start_time ? formatDate(job.start_time) : '00:00:00' }}</td>
+              <td>{{ job.end_time ? formatDate(job.end_time) : '00:00:00' }}</td>
+              <td>{{ job.start_time ? (job.end_time ? formatDuration(job.start_time, job.end_time) : '00:00:00') : '00:00:00' }}</td>
+              <!-- <td>{{ job.held ? 'Held' : (job.deleted ? 'Deleted' : (job.cyclic ? 'Cyclic' : '-')) }}</td> -->
               <td>{{ job.status }}</td>
             </tr>
             <tr v-if="paginatedItems.length == 0">
@@ -502,10 +505,10 @@
                   <h1 class="text-center text-base font-semibold p-2">Current Active</h1>
                   <hr class="mb-2">
                   <h1 class="text-center text-sm font-semibold mb-1">
-                    {{ currentActive ? currentActive : 'N/A' }}
+                    {{ currentActive ? currentActive : '-' }}
                   </h1>
                   <h2 class="text-center text-xs text-slate-500">
-                    {{ currentActive === 'DCI' ? 'Data Center' : (currentActive === 'BSD' ? 'Disaster Recovery Center' : 'N/A') }}
+                    {{ currentActive === 'DCI' ? 'Data Center' : (currentActive === 'BSD' ? 'Disaster Recovery Center' : '-') }}
                   </h2>
                 </div>
                 <div class="col-span-4 space-y-2">
@@ -519,13 +522,13 @@
                           <span class="flex flex-col">
                             <h1 class="text-xs font-medium text-slate-500">Readiness {{ this.$route.params.appName }} BSD:</h1>
                             <h2 class="text-sm font-semibold text-black">
-                              {{ readiness.BSD.status ? readiness.BSD.status : 'N/A' }}
+                              {{ readiness.BSD.status ? readiness.BSD.status : '-' }}
                             </h2>
                           </span>
                           <span class="flex flex-col">
                             <h1 class="text-xs font-medium text-slate-500 text-end">Last Execution:</h1>
                             <h2 class="text-sm font-semibold text-black text-end">
-                              {{ readiness.BSD.lastExecution ? formatDate(readiness.BSD.lastExecution) : 'N/A' }}
+                              {{ readiness.BSD.lastExecution ? formatDate(readiness.BSD.lastExecution) : '-' }}
                             </h2>
                           </span>
                         </div>
@@ -537,13 +540,13 @@
                           <span class="flex flex-col">
                             <h1 class="text-xs font-medium text-slate-500">Readiness {{ this.$route.params.appName }} DCI:</h1>
                             <h2 class="text-sm font-semibold text-black">
-                              {{ readiness.DCI.status ? readiness.DCI.status : 'N/A' }}
+                              {{ readiness.DCI.status ? readiness.DCI.status : '-' }}
                             </h2>
                           </span>
                           <span class="flex flex-col">
                             <h1 class="text-xs font-medium text-slate-500 text-end">Last Execution:</h1>
                             <h2 class="text-sm font-semibold text-black text-end">
-                              {{ readiness.DCI.lastExecution ? formatDate(readiness.DCI.lastExecution) : 'N/A' }}
+                              {{ readiness.DCI.lastExecution ? formatDate(readiness.DCI.lastExecution) : '-' }}
                             </h2>
                           </span>
                         </div>
@@ -572,11 +575,11 @@
                               {{ 
                                 runbook.totalJobs.DCIToBSD.switchOver > 0 
                                   ? ((runbook.totalJobsDone.DCIToBSD.switchOver / runbook.totalJobs.DCIToBSD.switchOver) * 100).toFixed(1) + ' %'
-                                  : 'N/A'
+                                  : '-'
                               }}
                             </h1>
                             <h2 class="text-sm text-end">
-                              {{ runbook.DCIToBSD.switchOver.status ? runbook.DCIToBSD.switchOver.status : 'N/A' }}
+                              {{ runbook.DCIToBSD.switchOver.status ? runbook.DCIToBSD.switchOver.status : '-' }}
                             </h2>
                           </div>
                         </div>
@@ -595,7 +598,7 @@
                           <div>
                             <h2 class="text-xs text-slate-500 text-end">Last Execution</h2>
                             <h1 class="text-sm text-end">
-                              {{ runbook.DCIToBSD.switchOver.lastExecution ? formatDate(runbook.DCIToBSD.switchOver.lastExecution) : 'N/A' }}
+                              {{ runbook.DCIToBSD.switchOver.lastExecution ? formatDate(runbook.DCIToBSD.switchOver.lastExecution) : '-' }}
                             </h1>
                           </div>
                         </div>
@@ -617,11 +620,11 @@
                               {{ 
                                 runbook.totalJobs.DCIToBSD.rollback > 0 
                                   ? ((runbook.totalJobsDone.DCIToBSD.rollback / runbook.totalJobs.DCIToBSD.rollback) * 100).toFixed(1) + ' %'
-                                  : 'N/A'
+                                  : '-'
                               }}
                             </h1>
                             <h2 class="text-sm text-end">
-                              {{ runbook.DCIToBSD.rollback.status ? runbook.DCIToBSD.rollback.status : 'N/A' }}
+                              {{ runbook.DCIToBSD.rollback.status ? runbook.DCIToBSD.rollback.status : '-' }}
                             </h2>
                           </div>
                         </div>
@@ -641,7 +644,7 @@
                           <div>
                             <h2 class="text-xs text-slate-500 text-end">Last Execution</h2>
                             <h1 class="text-sm text-end">
-                              {{ runbook.DCIToBSD.rollback.lastExecution ? formatDate(runbook.DCIToBSD.rollback.lastExecution) : 'N/A' }}
+                              {{ runbook.DCIToBSD.rollback.lastExecution ? formatDate(runbook.DCIToBSD.rollback.lastExecution) : '-' }}
                             </h1>
                           </div>
                         </div>
@@ -672,11 +675,11 @@
                               {{ 
                                 runbook.totalJobs.BSDToDCI.switchOver > 0 
                                   ? ((runbook.totalJobsDone.BSDToDCI.switchOver / runbook.totalJobs.BSDToDCI.switchOver) * 100).toFixed(1) + ' %'
-                                  : 'N/A'
+                                  : '-'
                               }}
                             </h1>
                             <h2 class="text-sm text-end">
-                              {{ runbook.BSDToDCI.switchOver.status ? runbook.BSDToDCI.switchOver.status : 'N/A' }}
+                              {{ runbook.BSDToDCI.switchOver.status ? runbook.BSDToDCI.switchOver.status : '-' }}
                             </h2>
                           </div>
                         </div>
@@ -695,7 +698,7 @@
                           <div>
                             <h2 class="text-xs text-slate-500 text-end">Last Execution</h2>
                             <h1 class="text-sm text-end">
-                              {{ runbook.BSDToDCI.switchOver.lastExecution ? formatDate(runbook.BSDToDCI.switchOver.lastExecution) : 'N/A' }}
+                              {{ runbook.BSDToDCI.switchOver.lastExecution ? formatDate(runbook.BSDToDCI.switchOver.lastExecution) : '-' }}
                             </h1>
                           </div>
                         </div>
@@ -717,11 +720,11 @@
                               {{ 
                                 runbook.totalJobs.BSDToDCI.rollback > 0 
                                   ? ((runbook.totalJobsDone.BSDToDCI.rollback / runbook.totalJobs.BSDToDCI.rollback) * 100).toFixed(1) + ' %'
-                                  : 'N/A'
+                                  : '-'
                               }}
                             </h1>
                             <h2 class="text-sm text-end">
-                              {{ runbook.BSDToDCI.rollback.status ? runbook.BSDToDCI.rollback.status : 'N/A' }}
+                              {{ runbook.BSDToDCI.rollback.status ? runbook.BSDToDCI.rollback.status : '-' }}
                             </h2>
                           </div>
                         </div>
@@ -740,7 +743,7 @@
                           <div>
                             <h2 class="text-xs text-slate-500 text-end">Last Execution</h2>
                             <h1 class="text-sm text-end">
-                              {{ runbook.BSDToDCI.rollback.lastExecution ? formatDate(runbook.BSDToDCI.rollback.lastExecution) : 'N/A' }}
+                              {{ runbook.BSDToDCI.rollback.lastExecution ? formatDate(runbook.BSDToDCI.rollback.lastExecution) : '-' }}
                             </h1>
                           </div>
                         </div>
@@ -760,39 +763,39 @@
                         <h3 class="text-sm font-semibold my-auto">{{ item.name }}</h3>
                         <div>
                           <h3 class="text-xs text-slate-500 text-end">SRT</h3>
-                          <h3 class="text-sm text-end">{{ item.srtTotalDuration ? item.srtTotalDuration : 'N/A' }}</h3>
+                          <h3 class="text-sm text-end">{{ item.srtTotalDuration ? item.srtTotalDuration : '-' }}</h3>
                         </div>
                       </div>
                       <hr class="my-2">
                       <div class="flex justify-between">
                         <div>
                           <h2 class="text-xs text-slate-500">Start Time</h2>
-                          <h3 class="text-sm">{{ item.start_time ? formatDate(item.start_time) : 'N/A' }}</h3>
+                          <h3 class="text-sm">{{ item.start_time ? formatDate(item.start_time) : '-' }}</h3>
                         </div>
                         <div>
                           <h2 class="text-xs text-slate-500 text-end">End Time</h2>
-                          <h3 class="text-sm text-end">{{ item.end_time ? formatDate(item.end_time) : 'N/A' }}</h3>
+                          <h3 class="text-sm text-end">{{ item.end_time ? formatDate(item.end_time) : '-' }}</h3>
                         </div>
                       </div>
                     </div>
                     <div v-if="workflow.length === 0"
                       class="rounded border p-2">
                       <div class="flex justify-between">
-                        <h3 class="text-sm font-semibold my-auto">N/A</h3>
+                        <h3 class="text-sm font-semibold my-auto">-</h3>
                         <div>
                           <h3 class="text-xs text-slate-500 text-end">SRT</h3>
-                          <h3 class="text-sm text-end">N/A</h3>
+                          <h3 class="text-sm text-end">-</h3>
                         </div>
                       </div>
                       <hr class="my-2">
                       <div class="flex justify-between">
                         <div>
                           <h2 class="text-xs text-slate-500">Start Time</h2>
-                          <h3 class="text-sm">N/A</h3>
+                          <h3 class="text-sm">-</h3>
                         </div>
                         <div>
                           <h2 class="text-xs text-slate-500 text-end">End Time</h2>
-                          <h3 class="text-sm text-end">N/A</h3>
+                          <h3 class="text-sm text-end">-</h3>
                         </div>
                       </div>
                     </div>
@@ -892,6 +895,7 @@ export default {
   components: { Tooltip, BarChart, DoughnutChart, LineChart, CardCategory, CardSummary, Pagination, Loading },
   data() {
     return {
+      isUpdatingBackend: false,
       jobs: [],
       workflow: [],
       isFetching: false,
@@ -1056,6 +1060,17 @@ export default {
     }
   },
   methods: {
+    async triggerUpdateBackend() {
+      this.isUpdatingBackend = true;
+      try {
+        const BASE_URL = `${this.config.isProtocolBackendSecure ? 'https://' : 'http://'}` + `${this.config.backendBaseUrl}`;
+        await axios.get(`${BASE_URL}/api/update-all-v2`);
+      } catch (error){
+        console.log(error);
+      } finally {
+        this.isUpdatingBackend = false;
+      }
+    },
     async fetchJobsandFolders() {
       if (this.isFetching === true) {
         return;
@@ -1091,7 +1106,7 @@ export default {
             this.currentActive = currentActiveApp?.some(item => item.status === 'Ended OK') ? 'DCI' : 'BSD'
           }
         } else {
-          this.currentActive = 'N/A'
+          this.currentActive = '-'
         }
         
         //readiness
@@ -1125,7 +1140,7 @@ export default {
         this.runbook.DCIToBSD.switchOver.status = latestDCIToBSDSwitchOver?.status;
         this.runbook.DCIToBSD.switchOver.estimatedDuration = latestDCIToBSDSwitchOver?.estimated_end_time 
           ? this.formatDuration(latestDCIToBSDSwitchOver?.estimated_end_time, latestDCIToBSDSwitchOver?.estimated_start_time) 
-          : 'N/A';
+          : '-';
         this.runbook.DCIToBSD.switchOver.lastExecution = latestDCIToBSDSwitchOver?.start_time;
         this.runbook.DCIToBSD.switchOver.end_time = latestDCIToBSDSwitchOver?.end_time;
         
@@ -1135,7 +1150,7 @@ export default {
         this.runbook.DCIToBSD.rollback.status = latestDCIToBSDRollback?.status;
         this.runbook.DCIToBSD.rollback.estimatedDuration = latestDCIToBSDRollback?.estimated_end_time 
           ? this.formatDuration(latestDCIToBSDRollback?.estimated_end_time, latestDCIToBSDRollback?.estimated_start_time) 
-          : 'N/A';
+          : '-';
         this.runbook.DCIToBSD.rollback.lastExecution = latestDCIToBSDRollback?.start_time;
         this.runbook.DCIToBSD.rollback.end_time = latestDCIToBSDRollback?.end_time;
         
@@ -1145,7 +1160,7 @@ export default {
         this.runbook.BSDToDCI.switchOver.status = latestBSDToDCISwitchOver?.status;
         this.runbook.BSDToDCI.switchOver.estimatedDuration = latestBSDToDCISwitchOver?.estimated_end_time 
           ? this.formatDuration(latestBSDToDCISwitchOver?.estimated_end_time, latestBSDToDCISwitchOver?.estimated_start_time) 
-          : 'N/A';
+          : '-';
         this.runbook.BSDToDCI.switchOver.lastExecution = latestBSDToDCISwitchOver?.start_time;
         this.runbook.BSDToDCI.switchOver.end_time = latestBSDToDCISwitchOver?.end_time;
         
@@ -1155,7 +1170,7 @@ export default {
         this.runbook.BSDToDCI.rollback.status = latestBSDToDCIRollback?.status;
         this.runbook.BSDToDCI.rollback.estimatedDuration = latestBSDToDCIRollback?.estimated_end_time 
           ? this.formatDuration(latestBSDToDCIRollback?.estimated_end_time, latestBSDToDCIRollback?.estimated_start_time) 
-          : 'N/A';
+          : '-';
         this.runbook.BSDToDCI.rollback.lastExecution = latestBSDToDCIRollback?.start_time;
         this.runbook.BSDToDCI.rollback.end_time = latestBSDToDCIRollback?.end_time;
 
@@ -1208,7 +1223,7 @@ export default {
           )
           .map((item) => ({
             ...item,
-            name: item.name.replace(/_/g, ' ').replace('BDISOA', ''),
+            name: item.folder.replace(/_/g, ' ').replace('BDISOA', ''),
           }));
 
         const isTimeInRange = (srtStartTime, workflowStart, workflowEnd) => {
@@ -1227,7 +1242,7 @@ export default {
         };
 
         const countSrt = (folder, start_time, end_time) => {
-          const folderName = `BDISOA${folder.replace(/ /g, '_')}`;
+          const folderName = `${folder.replace(/ /g, '_')}`;
 
           const srtJobs = response.data.jobs.filter((job) =>
             job.name.includes('#SRT') &&
@@ -1240,11 +1255,12 @@ export default {
             folder.folder.includes(folderName) &&
             isTimeInRange(folder.start_time, start_time, end_time)
           );
+          
+          const srtItems = [...srtJobs, ...srtFolders]
 
-          const totalSRTJobDuration = calculateTotalSRTDuration(srtJobs);
-          const totalSRTFolderDuration = calculateTotalSRTDuration(srtFolders);
+          const totalSRTItemDuration = calculateTotalSRTDuration(srtItems);
 
-          return { totalSRTDuration: totalSRTJobDuration + totalSRTFolderDuration };
+          return { totalSRTDuration: totalSRTItemDuration }
         };
 
         const formatDuration = (seconds) => {
@@ -1263,27 +1279,6 @@ export default {
             srtTotalDuration: formattedDuration,
           };
         });
-
-        // logging
-        // console.log('runbook', this.runbook);
-        // console.log('filter', this.filter);
-        // console.log('workflow', this.workflow);
-        // console.log('DCI -> BSD Runbook SO Job Done:', this.runbook.totalJobsDone.DCIToBSD.switchOver);
-        // console.log('DCI -> BSD Runbook SO Job Total:', this.runbook.totalJobs.DCIToBSD.switchOver);
-
-        // console.log('DCI -> BSD Runbook FB Job Done:', this.runbook.totalJobsDone.DCIToBSD.rollback);
-        // console.log('DCI -> BSD Runbook FB Job Total:', this.runbook.totalJobs.DCIToBSD.rollback);
-
-        // console.log('BSD -> DCI Runbook SO Job Done:', this.runbook.totalJobsDone.BSDToDCI.switchOver);
-        // console.log('BSD -> DCI Runbook SO Job Total:', this.runbook.totalJobs.BSDToDCI.switchOver);
-
-        // console.log('BSD -> DCI Runbook FB Job Done:', this.runbook.totalJobsDone.BSDToDCI.rollback);
-        // console.log('BSD -> DCI Runbook FB Job Total:', this.runbook.totalJobs.BSDToDCI.rollback);
-
-        // console.log('preImplement DCI: ', this.preImplement.DCI.status);
-        // console.log('preImplement DCI: ', this.preImplement.DCI.lastExecution);
-        // console.log('preImplement BSD: ', this.preImplement.BSD.status);
-        // console.log('preImplement BSD: ', this.preImplement.BSD.lastExecution);
         
       } catch (error) {
         console.log(error);

@@ -98,6 +98,7 @@ export default {
     this.overall();
   },
   mounted() {
+    this.overall();
     document.title = 'Monitoring Dashboard'
     this.applications = useConfigStore().config.applications;
     this.interval = setInterval(() => {
